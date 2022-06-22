@@ -14,13 +14,13 @@ DarcyPressure::validParams()
 DarcyPressure::DarcyPressure(const InputParameters & parameters)
   : ADKernelGrad(parameters),
 
-  _permeability(0.8451e-09),
-  _viscosity(7.98e-04)
+  _permeability(getADMaterialProperty<Real>("permeability")),
+  _viscosity(getADMaterialProperty<Real>("viscosity"))
 {
 }
 
 ADRealVectorValue
 DarcyPressure::precomputeQpResidual()
 {
-  return (_permeability / _viscosity) * _grad_u[_qp];
+  return (_permeability[_qp] / _viscosity[_qp]) * _grad_u[_qp];
 }
