@@ -3,8 +3,8 @@
   dim = 2
   nx = 100
   ny = 100
-  xmax = 60
-  ymax = 60
+  xmax = 50
+  ymax = 50
 []
 
 [Modules]
@@ -29,10 +29,14 @@
 
 [ICs]
   [./cIC]
-    type = RandomIC
+    type = CrossIC
     variable = c
-    min = 0.0
-    max = 1.0
+    average = 0.5
+    amplitude = 0.3
+    x1 = 15
+    x2 = 35
+    y1 = 15
+    y2 = 35
   [../]
 []
 
@@ -65,9 +69,7 @@
     type = DerivativeParsedMaterial
     f_name = fbulk
     args = c
-    constant_names = W
-    constant_expressions = 1.0/2.0
-    function = W*(c)^2*(1-c)^2
+    function = 0.5*(c)^2*(1-c)^2
     enable_jit = true
   [../]
 []
@@ -98,7 +100,7 @@
   nl_rel_tol = 1e-9
 
   dt = 2.0
-  end_time = 200.0
+  end_time = 50.0
 []
 
 [Outputs]
